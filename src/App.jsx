@@ -7,20 +7,26 @@ function App() {
   const [charAllowed,setCharAllowed] = useState(false)
   const [password,setPassword] = useState('')
 
-  const generatepassword = useCallback (()=>{
-    let pass = ""
-    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstwxyz"
-     if (numAllowed) 
-      str += "0123456789"
-     if (charAllowed) 
-      str += "!@#$%&*"
-     
-     for(let i = 0; i < length; i++){
-        pass += str.charAt(Math.floor(Math.random() * str.length));
-      }
+  const generatepassword = useCallback(() => {
+  let pass = "";
+  let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstwxyz";
+  let numChars = "0123456789";
+  let charChars = "!@#$%&*";
+  if (numAllowed) {
+    str += numChars;
+    pass += numChars.charAt(Math.floor(Math.random() * numChars.length));
+  }
+  if (charAllowed) {
+    str += charChars;
+    pass += charChars.charAt(Math.floor(Math.random() * charChars.length));
+  }
+  for (let i = pass.length; i < length; i++) {
+    pass += str.charAt(Math.floor(Math.random() * str.length));
+  }
 
-     setPassword(pass);
-  } ,[length,numAllowed,charAllowed])
+  setPassword(pass);
+}, [length, numAllowed, charAllowed]);
+
   useEffect(()=>{
     generatepassword()
   },[length, numAllowed, charAllowed, generatepassword])
